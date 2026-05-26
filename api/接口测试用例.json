@@ -1,0 +1,572 @@
+{
+  "name": "ZJC航空公司预订系统 - 接口连通性测试",
+  "description": "用于测试所有接口的连通性和基本功能",
+  "baseUrl": "http://localhost:8080",
+  "testCases": [
+    {
+      "name": "1. 基础连通性测试 - 获取所有航班",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/flights",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "includePast": "false"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "type": "array"
+        }
+      },
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data",
+          "operator": "exists"
+        }
+      ]
+    },
+    {
+      "name": "2. 获取可用航班",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/flights/available",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "includePast": "false"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "3. 获取航班详情",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/flights/1",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.id",
+          "operator": "exists"
+        }
+      ]
+    },
+    {
+      "name": "4. 【新增】获取可用座位列 - 经济舱",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/seats/available",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "flightId": "1",
+        "cabinClass": "ECONOMY"
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "code": 200,
+        "data": {
+          "availableColumns": {
+            "type": "array"
+          },
+          "columnAvailability": {
+            "type": "array"
+          }
+        }
+      },
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.availableColumns",
+          "operator": "exists"
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.columnAvailability",
+          "operator": "exists"
+        }
+      ],
+      "description": "测试获取航班经济舱的可用座位列信息"
+    },
+    {
+      "name": "5. 【新增】获取可用座位列 - 商务舱",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/seats/available",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "flightId": "1",
+        "cabinClass": "BUSINESS"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "6. 【新增】获取可用座位列 - 头等舱",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/seats/available",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "flightId": "1",
+        "cabinClass": "FIRST"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "7. 【新增】选择座位 - 带座位列选择",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/seats/select",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "flightId": 1,
+        "cabinClass": "ECONOMY",
+        "ticketCount": 2,
+        "selectedColumns": ["A", "B"]
+      },
+      "expectedStatus": 200,
+      "expectedResponse": {
+        "code": 200,
+        "data": {
+          "assignedSeats": {
+            "type": "array"
+          }
+        }
+      },
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.assignedSeats",
+          "operator": "exists"
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.assignedSeats.length()",
+          "operator": ">=",
+          "value": 2
+        }
+      ],
+      "description": "测试根据选择的列号分配座位"
+    },
+    {
+      "name": "8. 【更新】创建预订 - 不带座位选择（向后兼容）",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/bookings",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "flightId": 1,
+        "userId": 1,
+        "cabinClass": "ECONOMY",
+        "ticketCount": 1,
+        "payLater": false
+      },
+      "expectedStatus": 201,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 201
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.id",
+          "operator": "exists"
+        }
+      ],
+      "description": "测试不传座位选择参数，验证向后兼容性"
+    },
+    {
+      "name": "9. 【更新】创建预订 - 带座位选择",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/bookings",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "flightId": 1,
+        "userId": 1,
+        "cabinClass": "ECONOMY",
+        "ticketCount": 2,
+        "payLater": false,
+        "selectedSeatColumns": ["A", "B"]
+      },
+      "expectedStatus": 201,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 201
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.id",
+          "operator": "exists"
+        }
+      ],
+      "description": "测试带座位选择的预订创建"
+    },
+    {
+      "name": "10. 获取所有预订",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/bookings",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "11. 获取用户的所有预订",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/bookings/user/1",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "12. 获取预订详情",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/bookings/1",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "13. 用户注册",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/users/register",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "username": "testuser_" + "{{timestamp}}",
+        "email": "test_" + "{{timestamp}}" + "@example.com",
+        "password": "password123",
+        "phone": "13800138000",
+        "realName": "测试用户"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "14. 用户登录",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/users/login",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "username": "testuser",
+        "password": "password123"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.data.user",
+          "operator": "exists"
+        }
+      ]
+    },
+    {
+      "name": "15. 搜索航班",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/flights/search",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "origin": "北京",
+        "destination": "上海"
+      },
+      "params": {
+        "includePast": "false"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "16. 获取推荐航班",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/flights/recommendations",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "limit": "3",
+        "includePast": "false"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "17. 创建工单",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/tickets",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "userId": 1,
+        "subject": "测试工单",
+        "content": "这是一个测试工单"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "18. 获取工单列表",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/tickets",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "params": {
+        "page": "0",
+        "size": "10"
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    },
+    {
+      "name": "19. AI聊天",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/ai/chat",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "你好"
+          }
+        ]
+      },
+      "expectedStatus": 200,
+      "assertions": [
+        {
+          "type": "statusCode",
+          "value": 200
+        },
+        {
+          "type": "jsonPath",
+          "path": "$.code",
+          "value": 200
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "baseUrl": "http://localhost:8080",
+    "timestamp": "{{$timestamp}}"
+  },
+  "testSuites": [
+    {
+      "name": "基础连通性测试",
+      "testCases": ["1", "2", "3", "10", "12"]
+    },
+    {
+      "name": "座位选择功能测试（新增）",
+      "testCases": ["4", "5", "6", "7"]
+    },
+    {
+      "name": "预订功能测试（含座位选择）",
+      "testCases": ["8", "9"]
+    },
+    {
+      "name": "用户功能测试",
+      "testCases": ["13", "14"]
+    },
+    {
+      "name": "完整流程测试",
+      "testCases": ["14", "2", "4", "9", "10", "11"]
+    }
+  ]
+}
+
+
+
+
+

@@ -1,0 +1,19 @@
+{
+  "name": "Search Flights Example",
+  "request": {
+    "method": "POST",
+    "url": "http://localhost:8080/api/flights/search",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "origin": "北京",
+      "destination": "上海",
+      "departureDate": "2024-12-01T00:00:00"
+    }
+  },
+  "description": "示例请求：查询 2024-12-01 北京 -> 上海 的航班，departureDate 需包含具体时间（LocalDateTime）。"
+}
+
+
+

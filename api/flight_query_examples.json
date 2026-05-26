@@ -1,0 +1,622 @@
+{
+  "description": "查询航班的 JSON 数据示例",
+  "examples": {
+    "1_获取单个航班详情": {
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/flights/1",
+        "description": "根据航班ID获取详细信息"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "flightNumber": "ZJC001",
+          "aircraftType": "波音737-800",
+          "origin": "北京",
+          "destination": "上海",
+          "departureTime": "2025-12-01T08:00:00",
+          "arrivalTime": "2025-12-01T10:30:00",
+          "createdAt": "2025-11-18T10:49:56",
+          "updatedAt": "2025-11-18T10:49:56",
+          "seats": [
+            {
+              "id": 1,
+              "cabinClass": "ECONOMY",
+              "price": 680.00,
+              "remainingSeats": 16,
+              "totalSeats": 66,
+              "createdAt": "2025-11-18T10:51:06",
+              "updatedAt": "2025-11-18T10:51:06"
+            },
+            {
+              "id": 16,
+              "cabinClass": "BUSINESS",
+              "price": 2200.00,
+              "remainingSeats": 5,
+              "totalSeats": 25,
+              "createdAt": "2025-11-18T11:04:41",
+              "updatedAt": "2025-11-18T11:04:41"
+            },
+            {
+              "id": 17,
+              "cabinClass": "FIRST",
+              "price": 4500.00,
+              "remainingSeats": 2,
+              "totalSeats": 10,
+              "createdAt": "2025-11-18T11:04:41",
+              "updatedAt": "2025-11-18T11:04:41"
+            }
+          ]
+        }
+      }
+    },
+    "2_获取所有航班列表": {
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/flights",
+        "description": "获取所有航班列表"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": [
+          {
+            "id": 1,
+            "flightNumber": "ZJC001",
+            "aircraftType": "波音737-800",
+            "origin": "北京",
+            "destination": "上海",
+            "departureTime": "2025-12-01T08:00:00",
+            "arrivalTime": "2025-12-01T10:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 1,
+                "cabinClass": "ECONOMY",
+                "price": 680.00,
+                "remainingSeats": 16,
+                "totalSeats": 66,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 16,
+                "cabinClass": "BUSINESS",
+                "price": 2200.00,
+                "remainingSeats": 5,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 17,
+                "cabinClass": "FIRST",
+                "price": 4500.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "flightNumber": "ZJC002",
+            "aircraftType": "空客A320",
+            "origin": "上海",
+            "destination": "广州",
+            "departureTime": "2025-12-01T14:00:00",
+            "arrivalTime": "2025-12-01T16:45:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 2,
+                "cabinClass": "ECONOMY",
+                "price": 850.00,
+                "remainingSeats": 22,
+                "totalSeats": 72,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 18,
+                "cabinClass": "BUSINESS",
+                "price": 2800.00,
+                "remainingSeats": 4,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 19,
+                "cabinClass": "FIRST",
+                "price": 5500.00,
+                "remainingSeats": 1,
+                "totalSeats": 8,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "flightNumber": "ZJC003",
+            "aircraftType": "波音737-800",
+            "origin": "广州",
+            "destination": "深圳",
+            "departureTime": "2025-12-01T10:30:00",
+            "arrivalTime": "2025-12-01T11:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 3,
+                "cabinClass": "ECONOMY",
+                "price": 320.00,
+                "remainingSeats": 21,
+                "totalSeats": 71,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 20,
+                "cabinClass": "BUSINESS",
+                "price": 1200.00,
+                "remainingSeats": 3,
+                "totalSeats": 20,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "3_搜索航班_按出发地和目的地": {
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:8080/api/flights/search",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "origin": "北京",
+          "destination": "上海"
+        },
+        "description": "按出发地和目的地搜索航班"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": [
+          {
+            "id": 1,
+            "flightNumber": "ZJC001",
+            "aircraftType": "波音737-800",
+            "origin": "北京",
+            "destination": "上海",
+            "departureTime": "2025-12-01T08:00:00",
+            "arrivalTime": "2025-12-01T10:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 1,
+                "cabinClass": "ECONOMY",
+                "price": 680.00,
+                "remainingSeats": 16,
+                "totalSeats": 66,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 16,
+                "cabinClass": "BUSINESS",
+                "price": 2200.00,
+                "remainingSeats": 5,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 17,
+                "cabinClass": "FIRST",
+                "price": 4500.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "4_搜索航班_按出发日期": {
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:8080/api/flights/search",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "origin": "北京",
+          "destination": "上海",
+          "departureDate": "2025-12-01T08:00:00"
+        },
+        "description": "按出发地、目的地和出发日期搜索航班"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": [
+          {
+            "id": 1,
+            "flightNumber": "ZJC001",
+            "aircraftType": "波音737-800",
+            "origin": "北京",
+            "destination": "上海",
+            "departureTime": "2025-12-01T08:00:00",
+            "arrivalTime": "2025-12-01T10:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 1,
+                "cabinClass": "ECONOMY",
+                "price": 680.00,
+                "remainingSeats": 16,
+                "totalSeats": 66,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 16,
+                "cabinClass": "BUSINESS",
+                "price": 2200.00,
+                "remainingSeats": 5,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 17,
+                "cabinClass": "FIRST",
+                "price": 4500.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "5_搜索航班_仅按出发地": {
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:8080/api/flights/search",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "origin": "北京"
+        },
+        "description": "只按出发地搜索，返回所有从北京出发的航班"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": [
+          {
+            "id": 1,
+            "flightNumber": "ZJC001",
+            "aircraftType": "波音737-800",
+            "origin": "北京",
+            "destination": "上海",
+            "departureTime": "2025-12-01T08:00:00",
+            "arrivalTime": "2025-12-01T10:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 1,
+                "cabinClass": "ECONOMY",
+                "price": 680.00,
+                "remainingSeats": 16,
+                "totalSeats": 66,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 16,
+                "cabinClass": "BUSINESS",
+                "price": 2200.00,
+                "remainingSeats": 5,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 17,
+                "cabinClass": "FIRST",
+                "price": 4500.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "flightNumber": "ZJC004",
+            "aircraftType": "空客A330",
+            "origin": "北京",
+            "destination": "深圳",
+            "departureTime": "2025-12-02T09:00:00",
+            "arrivalTime": "2025-12-02T12:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 4,
+                "cabinClass": "ECONOMY",
+                "price": 1200.00,
+                "remainingSeats": 0,
+                "totalSeats": 50,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 21,
+                "cabinClass": "BUSINESS",
+                "price": 3800.00,
+                "remainingSeats": 3,
+                "totalSeats": 30,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 22,
+                "cabinClass": "FIRST",
+                "price": 8500.00,
+                "remainingSeats": 1,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "flightNumber": "ZJC010",
+            "aircraftType": "空客A330",
+            "origin": "北京",
+            "destination": "成都",
+            "departureTime": "2025-12-04T10:00:00",
+            "arrivalTime": "2025-12-04T13:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 10,
+                "cabinClass": "ECONOMY",
+                "price": 1100.00,
+                "remainingSeats": 7,
+                "totalSeats": 57,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 31,
+                "cabinClass": "BUSINESS",
+                "price": 3500.00,
+                "remainingSeats": 4,
+                "totalSeats": 30,
+                "createdAt": "2025-11-18T11:04:42",
+                "updatedAt": "2025-11-18T11:04:42"
+              },
+              {
+                "id": 32,
+                "cabinClass": "FIRST",
+                "price": 8000.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:42",
+                "updatedAt": "2025-11-18T11:04:42"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "6_获取可用航班": {
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/flights/available",
+        "description": "获取有剩余座位的航班（至少有一个舱位有剩余座位）"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": [
+          {
+            "id": 1,
+            "flightNumber": "ZJC001",
+            "aircraftType": "波音737-800",
+            "origin": "北京",
+            "destination": "上海",
+            "departureTime": "2025-12-01T08:00:00",
+            "arrivalTime": "2025-12-01T10:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 1,
+                "cabinClass": "ECONOMY",
+                "price": 680.00,
+                "remainingSeats": 16,
+                "totalSeats": 66,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 16,
+                "cabinClass": "BUSINESS",
+                "price": 2200.00,
+                "remainingSeats": 5,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 17,
+                "cabinClass": "FIRST",
+                "price": 4500.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "7_根据航班号查询": {
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/flights/number/ZJC001",
+        "description": "根据航班号查询航班信息"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": {
+          "id": 1,
+          "flightNumber": "ZJC001",
+          "aircraftType": "波音737-800",
+          "origin": "北京",
+          "destination": "上海",
+          "departureTime": "2025-12-01T08:00:00",
+          "arrivalTime": "2025-12-01T10:30:00",
+          "createdAt": "2025-11-18T10:49:56",
+          "updatedAt": "2025-11-18T10:49:56",
+          "seats": [
+            {
+              "id": 1,
+              "cabinClass": "ECONOMY",
+              "price": 680.00,
+              "remainingSeats": 16,
+              "totalSeats": 66,
+              "createdAt": "2025-11-18T10:51:06",
+              "updatedAt": "2025-11-18T10:51:06"
+            },
+            {
+              "id": 16,
+              "cabinClass": "BUSINESS",
+              "price": 2200.00,
+              "remainingSeats": 5,
+              "totalSeats": 25,
+              "createdAt": "2025-11-18T11:04:41",
+              "updatedAt": "2025-11-18T11:04:41"
+            },
+            {
+              "id": 17,
+              "cabinClass": "FIRST",
+              "price": 4500.00,
+              "remainingSeats": 2,
+              "totalSeats": 10,
+              "createdAt": "2025-11-18T11:04:41",
+              "updatedAt": "2025-11-18T11:04:41"
+            }
+          ]
+        }
+      }
+    },
+    "8_获取推荐航班": {
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/flights/recommendations?limit=3",
+        "description": "获取推荐航班列表"
+      },
+      "response": {
+        "code": 200,
+        "message": "操作成功",
+        "data": [
+          {
+            "id": 1,
+            "flightNumber": "ZJC001",
+            "aircraftType": "波音737-800",
+            "origin": "北京",
+            "destination": "上海",
+            "departureTime": "2025-12-01T08:00:00",
+            "arrivalTime": "2025-12-01T10:30:00",
+            "createdAt": "2025-11-18T10:49:56",
+            "updatedAt": "2025-11-18T10:49:56",
+            "seats": [
+              {
+                "id": 1,
+                "cabinClass": "ECONOMY",
+                "price": 680.00,
+                "remainingSeats": 16,
+                "totalSeats": 66,
+                "createdAt": "2025-11-18T10:51:06",
+                "updatedAt": "2025-11-18T10:51:06"
+              },
+              {
+                "id": 16,
+                "cabinClass": "BUSINESS",
+                "price": 2200.00,
+                "remainingSeats": 5,
+                "totalSeats": 25,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              },
+              {
+                "id": 17,
+                "cabinClass": "FIRST",
+                "price": 4500.00,
+                "remainingSeats": 2,
+                "totalSeats": 10,
+                "createdAt": "2025-11-18T11:04:41",
+                "updatedAt": "2025-11-18T11:04:41"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "字段说明": {
+    "航班字段": {
+      "id": "航班ID",
+      "flightNumber": "航班号",
+      "aircraftType": "机型",
+      "origin": "出发地",
+      "destination": "目的地",
+      "departureTime": "出发时间（ISO 8601格式）",
+      "arrivalTime": "到达时间（ISO 8601格式）",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间",
+      "seats": "舱位信息数组"
+    },
+    "舱位字段": {
+      "id": "舱位ID",
+      "cabinClass": "舱位等级（ECONOMY-经济舱，BUSINESS-商务舱，FIRST-头等舱）",
+      "price": "该舱位票价（元）",
+      "remainingSeats": "剩余座位数",
+      "totalSeats": "总座位数",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间"
+    }
+  }
+}
+
+

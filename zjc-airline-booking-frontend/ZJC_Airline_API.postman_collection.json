@@ -1,0 +1,825 @@
+{
+	"info": {
+		"name": "ZJC Airline Booking API",
+		"description": "ZJC 航空公司机票预订系统 API 接口集合",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "zjc-airline"
+	},
+	"item": [
+		{
+			"name": "用户管理",
+			"item": [
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"123456\",\n  \"name\": \"测试用户\",\n  \"idNumber\": \"110101199001011234\",\n  \"phone\": \"13800138000\",\n  \"address\": \"北京市朝阳区\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "register"]
+						}
+					}
+				},
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "login"]
+						}
+					}
+				},
+				{
+					"name": "获取所有用户",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users"]
+						}
+					}
+				},
+				{
+					"name": "获取用户详情",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "更新用户信息",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"phone\": \"13800138000\",\n  \"address\": \"北京市朝阳区\",\n  \"email\": \"test@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "修改密码",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldPassword\": \"123456\",\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/change-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":id", "change-password"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "充值钱包",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 500\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/wallet/recharge",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":id", "wallet", "recharge"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "用户统计",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "stats"]
+						}
+					}
+				},
+				{
+					"name": "重置密码（管理员）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/reset-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":id", "reset-password"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "更新用户状态（管理员）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", ":id", "status"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "航班管理",
+			"item": [
+				{
+					"name": "获取所有航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights?includePast=false",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights"],
+							"query": [
+								{
+									"key": "includePast",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "获取推荐航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/recommendations?limit=3&includePast=false",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "recommendations"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "includePast",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "搜索城市",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/cities?keyword=北京&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "cities"],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "北京"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "搜索航班",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureDate\": \"2025-01-20T00:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/search",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "search"]
+						}
+					}
+				},
+				{
+					"name": "创建航班（管理员）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightNumber\": \"ZJC001\",\n  \"aircraftType\": \"Boeing 737\",\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureTime\": \"2025-01-20T08:00:00\",\n  \"arrivalTime\": \"2025-01-20T10:30:00\",\n  \"remarks\": \"准时起飞\",\n  \"seats\": [\n    {\n      \"cabinClass\": \"经济舱\",\n      \"price\": 680,\n      \"totalSeats\": 150,\n      \"remainingSeats\": 120\n    },\n    {\n      \"cabinClass\": \"商务舱\",\n      \"price\": 2000,\n      \"totalSeats\": 20,\n      \"remainingSeats\": 15\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights"]
+						}
+					}
+				},
+				{
+					"name": "更新航班（管理员）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightNumber\": \"ZJC001\",\n  \"aircraftType\": \"Boeing 737\",\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureTime\": \"2025-01-20T08:00:00\",\n  \"arrivalTime\": \"2025-01-20T10:30:00\",\n  \"remarks\": \"准时起飞\",\n  \"seats\": [\n    {\n      \"cabinClass\": \"经济舱\",\n      \"price\": 680,\n      \"totalSeats\": 150,\n      \"remainingSeats\": 100\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "删除航班（管理员）",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "订单管理",
+			"item": [
+				{
+					"name": "创建订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightId\": 1,\n  \"userId\": 1,\n  \"cabinClass\": \"经济舱\",\n  \"ticketCount\": 2,\n  \"payLater\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "获取所有订单",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						},
+						"description": "获取所有订单列表（管理员权限）\n\n**响应格式：**\n- 成功：返回订单数组或 `{ data: [...] }` 格式\n- 失败：返回错误信息\n\n**响应示例：**\n```json\n{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"orderNo\": \"BK000001\",\n      \"flight\": {\n        \"id\": 1,\n        \"flightNumber\": \"ZJC001\",\n        \"origin\": \"北京\",\n        \"destination\": \"上海\",\n        \"departureTime\": \"2025-01-20T08:00:00\",\n        \"arrivalTime\": \"2025-01-20T10:30:00\",\n        \"price\": 680\n      },\n      \"ticketCount\": 2,\n      \"totalAmount\": 1360,\n      \"status\": \"CREATED\",\n      \"createdAt\": \"2025-01-19T10:00:00\",\n      \"paymentDueAt\": \"2025-01-19T12:00:00\"\n    }\n  ]\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "获取用户订单",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/user/:userId",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "user", ":userId"],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "支付订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/:id/pay",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", ":id", "pay"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "取消订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/:id/cancel",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", ":id", "cancel"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "申请退票",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"reason\": \"行程变更\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/:id/refund-request",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", ":id", "refund-request"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "审核退票（管理员）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"approve\": true,\n  \"reason\": \"审核通过\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/:id/refund-review",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", ":id", "refund-review"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "订单统计",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "stats"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "工单管理",
+			"item": [
+				{
+					"name": "提交工单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"订单问题\",\n  \"contact\": \"13800138000\",\n  \"orderNo\": \"BK000001\",\n  \"category\": \"booking\",\n  \"description\": \"订单支付失败，请协助处理\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tickets"]
+						}
+					}
+				},
+				{
+					"name": "获取工单列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets?page=1&size=10&status=PENDING",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tickets"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "PENDING"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "获取工单详情",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tickets", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "更新工单（管理员）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"RESOLVED\",\n  \"adminReply\": \"问题已解决，订单已重新处理\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tickets", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "删除工单（管理员）",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tickets", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
+
+

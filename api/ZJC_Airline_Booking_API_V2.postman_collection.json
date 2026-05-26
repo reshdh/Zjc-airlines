@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "zjc-airline-booking-v2-2025",
+		"name": "ZJC航空公司预订系统 API V2",
+		"description": "基于新数据库结构的API接口集合（包含舱位等级和订单号）",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "航班管理",
+			"item": [
+				{
+					"name": "获取所有航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights"]
+						},
+						"description": "获取所有航班列表，包含舱位信息"
+					},
+					"response": []
+				},
+				{
+					"name": "获取可用航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "available"]
+						},
+						"description": "获取有剩余座位的航班列表"
+					},
+					"response": []
+				},
+				{
+					"name": "根据ID获取航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "1"]
+						},
+						"description": "根据航班ID获取详细信息，包含所有舱位信息"
+					},
+					"response": []
+				},
+				{
+					"name": "根据航班号获取航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/number/ZJC001",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "number", "ZJC001"]
+						},
+						"description": "根据航班号查询航班信息"
+					},
+					"response": []
+				},
+				{
+					"name": "搜索航班",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureDate\": \"2025-12-01T08:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/search",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "search"]
+						},
+						"description": "搜索航班，支持按出发地、目的地、出发日期筛选。所有字段都是可选的。"
+					},
+					"response": []
+				},
+				{
+					"name": "搜索航班（仅出发地）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"北京\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/search",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "search"]
+						},
+						"description": "只按出发地搜索"
+					},
+					"response": []
+				},
+				{
+					"name": "搜索航班（空查询）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/search",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "search"]
+						},
+						"description": "空查询，返回所有可用航班"
+					},
+					"response": []
+				},
+				{
+					"name": "获取推荐航班",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/recommendations?limit=3",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "recommendations"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3",
+									"description": "返回数量，默认3"
+								}
+							]
+						},
+						"description": "获取推荐航班列表"
+					},
+					"response": []
+				},
+				{
+					"name": "创建航班（管理员）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightNumber\": \"ZJC016\",\n  \"aircraftType\": \"波音737-800\",\n  \"origin\": \"北京\",\n  \"destination\": \"广州\",\n  \"departureTime\": \"2025-12-06T08:00:00\",\n  \"arrivalTime\": \"2025-12-06T11:30:00\",\n  \"seats\": [\n    {\n      \"cabinClass\": \"ECONOMY\",\n      \"price\": 950.00,\n      \"remainingSeats\": 30,\n      \"totalSeats\": 50\n    },\n    {\n      \"cabinClass\": \"BUSINESS\",\n      \"price\": 2500.00,\n      \"remainingSeats\": 10,\n      \"totalSeats\": 20\n    },\n    {\n      \"cabinClass\": \"FIRST\",\n      \"price\": 5000.00,\n      \"remainingSeats\": 5,\n      \"totalSeats\": 10\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights"]
+						},
+						"description": "创建新航班，需要同时创建舱位信息。注意：价格和座位信息在seats数组中，每个舱位一个对象。"
+					},
+					"response": []
+				},
+				{
+					"name": "更新航班（管理员）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightNumber\": \"ZJC001\",\n  \"aircraftType\": \"波音737-800\",\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureTime\": \"2025-12-01T08:00:00\",\n  \"arrivalTime\": \"2025-12-01T10:30:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "1"]
+						},
+						"description": "更新航班基本信息（不包括舱位信息）"
+					},
+					"response": []
+				},
+				{
+					"name": "删除航班（管理员）",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/flights/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "flights", "1"]
+						},
+						"description": "删除航班（会级联删除舱位信息）"
+					},
+					"response": []
+				}
+			],
+			"description": "航班管理相关接口，包含舱位等级信息"
+		},
+		{
+			"name": "订单管理",
+			"item": [
+				{
+					"name": "创建订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightId\": 1,\n  \"userId\": 1,\n  \"cabinClass\": \"ECONOMY\",\n  \"ticketCount\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						},
+						"description": "创建新订单。系统会自动生成订单号（orderNo），格式：BK+日期+序号。cabinClass可选值：ECONOMY（经济舱）、BUSINESS（商务舱）、FIRST（头等舱）。"
+					},
+					"response": []
+				},
+				{
+					"name": "创建订单（商务舱）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightId\": 1,\n  \"userId\": 1,\n  \"cabinClass\": \"BUSINESS\",\n  \"ticketCount\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						},
+						"description": "创建商务舱订单示例"
+					},
+					"response": []
+				},
+				{
+					"name": "创建订单（头等舱）",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightId\": 1,\n  \"userId\": 1,\n  \"cabinClass\": \"FIRST\",\n  \"ticketCount\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						},
+						"description": "创建头等舱订单示例"
+					},
+					"response": []
+				},
+				{
+					"name": "获取所有订单",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						},
+						"description": "获取所有订单列表，包含订单号、舱位等级等信息"
+					},
+					"response": []
+				},
+				{
+					"name": "获取最近订单",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/recent?limit=6",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "recent"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "6",
+									"description": "返回数量，默认6"
+								}
+							]
+						},
+						"description": "获取最近的订单列表"
+					},
+					"response": []
+				},
+				{
+					"name": "根据ID获取订单",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "1"]
+						},
+						"description": "根据订单ID获取详细信息，包含订单号、舱位等级等"
+					},
+					"response": []
+				},
+				{
+					"name": "获取用户的所有订单",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/user/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "user", "1"]
+						},
+						"description": "获取指定用户的所有订单"
+					},
+					"response": []
+				},
+				{
+					"name": "获取航班的订单列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/flight/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "flight", "1"]
+						},
+						"description": "获取指定航班的所有订单"
+					},
+					"response": []
+				},
+				{
+					"name": "更新订单状态（已支付）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"PAID\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/1/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "1", "status"]
+						},
+						"description": "更新订单状态为已支付。状态可选值：CREATED（已创建/待支付）、PAID（已支付）、CANCELED（已取消/退票）"
+					},
+					"response": []
+				},
+				{
+					"name": "更新订单状态（已取消）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"CANCELED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/1/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "1", "status"]
+						},
+						"description": "取消订单，系统会自动恢复对应舱位的剩余座位数"
+					},
+					"response": []
+				},
+				{
+					"name": "删除订单",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings", "1"]
+						},
+						"description": "删除订单，系统会自动恢复对应舱位的剩余座位数"
+					},
+					"response": []
+				}
+			],
+			"description": "订单管理相关接口，包含订单号和舱位等级信息"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
+
+

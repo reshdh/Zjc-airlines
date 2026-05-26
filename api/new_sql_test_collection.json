@@ -1,0 +1,222 @@
+{
+  "info": {
+    "_postman_id": "b7d6655b-8d0a-4c32-8fbb-4a040457b6da",
+    "name": "ZJC Airline Booking - new.sql 数据集测试",
+    "description": "基于 2025-11-19 提供的 new.sql 数据构建的接口示例。所有示例均假设后端运行在 {{baseUrl}}，并且数据库已按 new.sql 导入。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 用户登录 - testuser005 (钱包余额充足)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser005\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "login"
+          ]
+        },
+        "description": "new.sql 中 ID=11 的用户（用户名 testuser005）钱包余额 951,874 元，适合作为下单测试账户。系统初始化时其密码被重置为 123456。"
+      }
+    },
+    {
+      "name": "02 获取未来航班列表",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/flights?includePast=false",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "flights"
+          ],
+          "query": [
+            {
+              "key": "includePast",
+              "value": "false"
+            }
+          ]
+        },
+        "description": "直接列出所有未过期航班，数据来自 flights 表（如 ZJC101、ZJC201 等）。"
+      }
+    },
+    {
+      "name": "03 航班搜索 - 北京 → 上海 2025-12-01",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureDate\": \"2025-12-01T00:00:00\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/flights/search",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "flights",
+            "search"
+          ]
+        },
+        "description": "new.sql 中 flight_number=ZJC101 (ID=20) 的记录满足该条件。departureDate 发送 ISO 格式字符串以保证兼容。"
+      }
+    },
+    {
+      "name": "04 航班详情 - ZJC101 (ID=20)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/flights/20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "flights",
+            "20"
+          ]
+        },
+        "description": "查看 new.sql 中 ID=20 的航班：ZJC101，北京→上海，08:00 起飞。返回结果会包含由 seats/flight_prices 计算出的各舱位余票信息。"
+      }
+    },
+    {
+      "name": "05 查询可用座位列 - ZJC101 经济舱",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/seats/available?flightId=20&cabinClass=ECONOMY",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seats",
+            "available"
+          ],
+          "query": [
+            {
+              "key": "flightId",
+              "value": "20"
+            },
+            {
+              "key": "cabinClass",
+              "value": "ECONOMY"
+            }
+          ]
+        },
+        "description": "返回 columns/availability，可用于提示乘客当前列是否充足。数据源于 seats + booking_seats 表。"
+      }
+    },
+    {
+      "name": "06 预分配座位 - ZJC101 经济舱 1 张",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"flightId\": 20,\n  \"cabinClass\": \"ECONOMY\",\n  \"ticketCount\": 1,\n  \"selectedColumns\": [\"A\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/seats/select",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seats",
+            "select"
+          ]
+        },
+        "description": "请求指定列（如 A 列）。若列已满，后端会自动分配其它可用列，并在 response.unavailableColumns 标明。"
+      }
+    },
+    {
+      "name": "07 创建订单 - 用户ID 11 购买 ZJC101 经济舱",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"flightId\": 20,\n  \"userId\": 11,\n  \"cabinClass\": \"ECONOMY\",\n  \"ticketCount\": 1,\n  \"payLater\": false,\n  \"selectedSeatColumns\": [\"A\"],\n  \"passengers\": [\n    {\n      \"name\": \"伟大的\",\n      \"idNumber\": \"110101199001011239\",\n      \"phone\": \"13800138013\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings"
+          ]
+        },
+        "description": "userId=11（用户名 testuser005）钱包余额充足，可直接支付。selectedSeatColumns 会触发 seatService.selectSeats 生成实际座位号。"
+      }
+    },
+    {
+      "name": "08 查询用户订单列表 - userId=11",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings/user/11",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "bookings",
+            "user",
+            "11"
+          ]
+        },
+        "description": "验证下单后的订单是否存在，并可看到 booking_seats 中的乘客姓名与座位信息。"
+      }
+    }
+  ]
+}
+
+
+

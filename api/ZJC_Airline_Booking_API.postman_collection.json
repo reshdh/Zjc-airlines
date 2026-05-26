@@ -1,0 +1,883 @@
+{
+	"info": {
+		"name": "ZJC航空公司预订系统 API",
+		"description": "完整的 API 接口集合，包含用户、航班、预订、座位、工单和AI相关接口",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "zjc-airline-booking"
+	},
+	"item": [
+		{
+			"name": "用户管理",
+			"item": [
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"13800138000\",\n  \"realName\": \"测试用户\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "register"]
+						}
+					}
+				},
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "login"]
+						}
+					}
+				},
+				{
+					"name": "获取用户统计",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/users/stats",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "stats"]
+						}
+					}
+				},
+				{
+					"name": "获取用户详情",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}"]
+						}
+					}
+				},
+				{
+					"name": "获取所有用户",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users"]
+						}
+					}
+				},
+				{
+					"name": "更新用户信息",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"newemail@example.com\",\n  \"phone\": \"13900139000\",\n  \"realName\": \"新姓名\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}"]
+						}
+					}
+				},
+				{
+					"name": "重置密码",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}/reset-password",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}", "reset-password"]
+						}
+					}
+				},
+				{
+					"name": "修改密码",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldPassword\": \"oldpassword123\",\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}/change-password",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}", "change-password"]
+						}
+					}
+				},
+				{
+					"name": "更新用户状态",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"ACTIVE\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}/status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}", "status"]
+						}
+					}
+				},
+				{
+					"name": "删除用户",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}"]
+						}
+					}
+				},
+				{
+					"name": "钱包充值",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 1000.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}/wallet/recharge",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}", "wallet", "recharge"]
+						}
+					}
+				},
+				{
+					"name": "钱包提现",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 500.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{userId}}/wallet/withdraw",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "{{userId}}", "wallet", "withdraw"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "航班管理",
+			"item": [
+				{
+					"name": "获取所有航班",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/flights?includePast=false",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights"],
+							"query": [
+								{
+									"key": "includePast",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "获取可用航班",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/flights/available?includePast=false",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "available"],
+							"query": [
+								{
+									"key": "includePast",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "获取航班详情",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/flights/{{flightId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "{{flightId}}"]
+						}
+					}
+				},
+				{
+					"name": "根据航班号查询",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/flights/number/{{flightNumber}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "number", "{{flightNumber}}"]
+						}
+					}
+				},
+				{
+					"name": "搜索航班",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureDate\": \"2024-12-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/flights/search?includePast=false",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "search"],
+							"query": [
+								{
+									"key": "includePast",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "创建航班",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightNumber\": \"ZJC999\",\n  \"aircraftType\": \"SkyWing 300\",\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureTime\": \"2024-12-01T10:00:00\",\n  \"arrivalTime\": \"2024-12-01T12:30:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/flights",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights"]
+						}
+					}
+				},
+				{
+					"name": "更新航班",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightNumber\": \"ZJC999\",\n  \"aircraftType\": \"SkyWing 300\",\n  \"origin\": \"北京\",\n  \"destination\": \"上海\",\n  \"departureTime\": \"2024-12-01T10:30:00\",\n  \"arrivalTime\": \"2024-12-01T13:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/flights/{{flightId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "{{flightId}}"]
+						}
+					}
+				},
+				{
+					"name": "删除航班",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/api/flights/{{flightId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "{{flightId}}"]
+						}
+					}
+				},
+				{
+					"name": "获取推荐航班",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/flights/recommendations?limit=3&includePast=false",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "recommendations"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "includePast",
+									"value": "false"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "搜索城市",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/flights/cities?keyword=北京&limit=20",
+							"host": ["{{base_url}}"],
+							"path": ["api", "flights", "cities"],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "北京"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "预订管理",
+			"item": [
+				{
+					"name": "创建预订",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightId\": 1,\n  \"userId\": 1,\n  \"cabinClass\": \"ECONOMY\",\n  \"ticketCount\": 2,\n  \"payLater\": false,\n  \"selectedSeatColumns\": [\"A\", \"B\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "获取所有预订",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "获取最近订单",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/bookings/recent?limit=6",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "recent"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "6"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "获取预订详情",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}"]
+						}
+					}
+				},
+				{
+					"name": "获取用户的所有预订",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/bookings/user/{{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "user", "{{userId}}"]
+						}
+					}
+				},
+				{
+					"name": "获取航班的预订列表",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/bookings/flight/{{flightId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "flight", "{{flightId}}"]
+						}
+					}
+				},
+				{
+					"name": "更新预订状态",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"PAID\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/status",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "status"]
+						}
+					}
+				},
+				{
+					"name": "删除预订",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}"]
+						}
+					}
+				},
+				{
+					"name": "支付待支付订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/pay",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "pay"]
+						}
+					}
+				},
+				{
+					"name": "取消待支付订单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/cancel",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "cancel"]
+						}
+					}
+				},
+				{
+					"name": "申请退票",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"reason\": \"行程变更\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/refund-request",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "refund-request"]
+						}
+					}
+				},
+				{
+					"name": "审核退票",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"approve\": true,\n  \"reason\": \"同意退票\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/refund-review",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "refund-review"]
+						}
+					}
+				},
+				{
+					"name": "检查是否可以改签",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/change/check?userId={{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "change", "check"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "计算改签价格",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newFlightId\": 2,\n  \"newCabinClass\": \"BUSINESS\",\n  \"changeReason\": \"行程变更\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/change/price?userId={{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "change", "price"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "执行改签",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newFlightId\": 2,\n  \"newCabinClass\": \"BUSINESS\",\n  \"changeReason\": \"行程变更\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bookings/{{bookingId}}/change?userId={{userId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "bookings", "{{bookingId}}", "change"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "座位管理",
+			"item": [
+				{
+					"name": "获取可用座位列",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/seats/available?flightId={{flightId}}&cabinClass=ECONOMY",
+							"host": ["{{base_url}}"],
+							"path": ["api", "seats", "available"],
+							"query": [
+								{
+									"key": "flightId",
+									"value": "{{flightId}}"
+								},
+								{
+									"key": "cabinClass",
+									"value": "ECONOMY"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "选择座位",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"flightId\": 1,\n  \"cabinClass\": \"ECONOMY\",\n  \"ticketCount\": 2,\n  \"selectedColumns\": [\"A\", \"B\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/seats/select",
+							"host": ["{{base_url}}"],
+							"path": ["api", "seats", "select"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "工单管理",
+			"item": [
+				{
+					"name": "创建工单",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 1,\n  \"subject\": \"退票问题\",\n  \"content\": \"我需要申请退票\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/tickets",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tickets"]
+						}
+					}
+				},
+				{
+					"name": "获取工单列表",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/tickets?page=0&size=10&status=OPEN",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tickets"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "OPEN"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "获取工单详情",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/tickets/{{ticketId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tickets", "{{ticketId}}"]
+						}
+					}
+				},
+				{
+					"name": "更新工单（回复）",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reply\": \"已处理您的问题\",\n  \"status\": \"RESOLVED\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/tickets/{{ticketId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tickets", "{{ticketId}}"]
+						}
+					}
+				},
+				{
+					"name": "删除工单",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/api/tickets/{{ticketId}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "tickets", "{{ticketId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "AI助手",
+			"item": [
+				{
+					"name": "AI聊天",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"你好\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ai/chat",
+							"host": ["{{base_url}}"],
+							"path": ["api", "ai", "chat"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "flightId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "bookingId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "ticketId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "flightNumber",
+			"value": "ZJC001",
+			"type": "string"
+		}
+	]
+}

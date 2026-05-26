@@ -1,0 +1,183 @@
+{
+  "name": "快速连通性测试",
+  "baseUrl": "http://localhost:8080",
+  "tests": [
+    {
+      "name": "测试1: 获取所有航班",
+      "method": "GET",
+      "url": "http://localhost:8080/api/flights?includePast=false",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试2: 获取可用航班",
+      "method": "GET",
+      "url": "http://localhost:8080/api/flights/available?includePast=false",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试3: 获取航班详情",
+      "method": "GET",
+      "url": "http://localhost:8080/api/flights/1",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试4: 【新增】获取可用座位列-经济舱",
+      "method": "GET",
+      "url": "http://localhost:8080/api/seats/available?flightId=1&cabinClass=ECONOMY",
+      "expectedStatus": 200,
+      "description": "新增接口：获取航班经济舱的可用座位列"
+    },
+    {
+      "name": "测试5: 【新增】获取可用座位列-商务舱",
+      "method": "GET",
+      "url": "http://localhost:8080/api/seats/available?flightId=1&cabinClass=BUSINESS",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试6: 【新增】获取可用座位列-头等舱",
+      "method": "GET",
+      "url": "http://localhost:8080/api/seats/available?flightId=1&cabinClass=FIRST",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试7: 【新增】选择座位",
+      "method": "POST",
+      "url": "http://localhost:8080/api/seats/select",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "flightId": 1,
+        "cabinClass": "ECONOMY",
+        "ticketCount": 2,
+        "selectedColumns": ["A", "B"]
+      },
+      "expectedStatus": 200,
+      "description": "新增接口：根据列号选择座位"
+    },
+    {
+      "name": "测试8: 【更新】创建预订-不带座位选择",
+      "method": "POST",
+      "url": "http://localhost:8080/api/bookings",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "flightId": 1,
+        "userId": 1,
+        "cabinClass": "ECONOMY",
+        "ticketCount": 1,
+        "payLater": false
+      },
+      "expectedStatus": 201,
+      "description": "更新接口：验证向后兼容性（不传座位选择参数）"
+    },
+    {
+      "name": "测试9: 【更新】创建预订-带座位选择",
+      "method": "POST",
+      "url": "http://localhost:8080/api/bookings",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "flightId": 1,
+        "userId": 1,
+        "cabinClass": "ECONOMY",
+        "ticketCount": 2,
+        "payLater": false,
+        "selectedSeatColumns": ["A", "B"]
+      },
+      "expectedStatus": 201,
+      "description": "更新接口：带座位选择的预订创建"
+    },
+    {
+      "name": "测试10: 获取所有预订",
+      "method": "GET",
+      "url": "http://localhost:8080/api/bookings",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试11: 获取用户的所有预订",
+      "method": "GET",
+      "url": "http://localhost:8080/api/bookings/user/1",
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试12: 搜索航班",
+      "method": "POST",
+      "url": "http://localhost:8080/api/flights/search?includePast=false",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "origin": "北京",
+        "destination": "上海"
+      },
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试13: 用户登录",
+      "method": "POST",
+      "url": "http://localhost:8080/api/users/login",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "username": "testuser",
+        "password": "password123"
+      },
+      "expectedStatus": 200
+    },
+    {
+      "name": "测试14: 获取工单列表",
+      "method": "GET",
+      "url": "http://localhost:8080/api/tickets?page=0&size=10",
+      "expectedStatus": 200
+    }
+  ],
+  "priority": {
+    "high": [
+      "测试1",
+      "测试4",
+      "测试8",
+      "测试9"
+    ],
+    "medium": [
+      "测试7"
+    ],
+    "low": [
+      "测试2",
+      "测试3",
+      "测试5",
+      "测试6",
+      "测试10",
+      "测试11",
+      "测试12",
+      "测试13",
+      "测试14"
+    ]
+  },
+  "notes": {
+    "新增接口": [
+      "测试4: 获取可用座位列-经济舱",
+      "测试5: 获取可用座位列-商务舱",
+      "测试6: 获取可用座位列-头等舱",
+      "测试7: 选择座位"
+    ],
+    "更新接口": [
+      "测试8: 创建预订-不带座位选择（验证向后兼容）",
+      "测试9: 创建预订-带座位选择（新功能）"
+    ],
+    "使用说明": [
+      "1. 确保后端服务已启动（http://localhost:8080）",
+      "2. 确保数据库已初始化（执行了 insert_sample_flights.sql）",
+      "3. 高优先级测试必须全部通过",
+      "4. 测试前请确保有测试数据（航班ID=1存在，用户ID=1存在）"
+    ]
+  }
+}
+
+
+
+
+

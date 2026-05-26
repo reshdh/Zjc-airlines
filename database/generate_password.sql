@@ -1,0 +1,27 @@
+-- ============================================
+-- 密码生成说明
+-- ============================================
+-- 
+-- 注意：MySQL 本身不支持 BCrypt 加密
+-- 密码应该在 Java 应用中使用 Spring Security 的 BCryptPasswordEncoder 来加密
+-- 
+-- 以下是在 Java 代码中生成密码的示例：
+-- 
+-- import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+-- 
+-- BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+-- String password = encoder.encode("123456");
+-- System.out.println(password);
+-- 
+-- 或者使用在线工具生成：https://bcrypt-generator.com/
+-- 
+-- 默认密码 "123456" 的 BCrypt 哈希值示例（强度 10）：
+-- $2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iwK8pQ1O
+-- 
+-- 如果需要在数据库中直接测试，可以暂时使用明文密码（仅用于开发测试）
+-- 生产环境必须使用加密后的密码！
+
+-- 临时测试用（仅开发环境，生产环境请删除）
+-- UPDATE users SET password = '123456' WHERE username = 'admin';
+-- UPDATE users SET password = '123456' WHERE username = 'zhangsan';
+

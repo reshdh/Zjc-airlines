@@ -1,0 +1,38 @@
+{
+  "说明": "此文件包含多个测试用例示例，请勿直接复制整个文件到Postman。",
+  "使用方法": "请从下面的用例中选择一个，只复制单个用例的JSON内容到Postman的请求体中。",
+  "测试用例1_经济舱订单": {
+    "flightId": 1,
+    "userId": 1,
+    "cabinClass": "ECONOMY",
+    "ticketCount": 2
+  },
+  "测试用例2_商务舱订单": {
+    "flightId": 1,
+    "userId": 1,
+    "cabinClass": "BUSINESS",
+    "ticketCount": 1
+  },
+  "测试用例3_头等舱订单": {
+    "flightId": 1,
+    "userId": 1,
+    "cabinClass": "FIRST",
+    "ticketCount": 1
+  },
+  "测试用例4_延迟支付订单": {
+    "flightId": 1,
+    "userId": 1,
+    "cabinClass": "ECONOMY",
+    "ticketCount": 3,
+    "payLater": true
+  },
+  "测试用例5_多张票经济舱": {
+    "flightId": 1,
+    "userId": 1,
+    "cabinClass": "ECONOMY",
+    "ticketCount": 4
+  }
+}
+
+
+
